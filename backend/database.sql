@@ -1,7 +1,7 @@
 SET
     FOREIGN_KEY_CHECKS = 0;
 
-CREATE DATABASE `Parents`;
+CREATE DATABASE IF NOT EXISTS `Parents`;
 
 USE `Parents`;
 
