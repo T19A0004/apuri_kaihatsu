@@ -109,10 +109,12 @@ export default function Students() {
       cell: ({ row }) => (
         <Dialog>
           <DropdownMenu modal={false}>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger
+              onClick={(e) => e.stopPropagation()} // Stop row click
+            >
               <EllipsisVertical />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent onClick={(e) => e.stopPropagation()}> {/* Prevent row click when interacting with the menu */}
               <DropdownMenuItem
                 onClick={() => router.push(`${pathname}/${row.original.id}`)}
               >
@@ -194,7 +196,7 @@ export default function Students() {
           </Button>
         </div>
         <Card x-chunk="dashboard-05-chunk-3">
-          <TableApi data={studentData?.students ?? null} columns={columns} />
+          <TableApi data={studentData?.students ?? null} columns={columns} basepath="students" />
         </Card>
       </div>
     </div>

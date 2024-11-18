@@ -99,10 +99,12 @@ export default function Info() {
       cell: ({ row }) => (
         <Dialog key={row.original.id}>
           <DropdownMenu modal={false}>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger 
+            onClick={(e) => e.stopPropagation()} // Stop row click
+            >
               <EllipsisVertical />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent onClick={(e) => e.stopPropagation()}> {/* Prevent row click when interacting with the menu */}
               <DropdownMenuItem
                 onClick={() => {
                   router.push(`${pathName}/${row.original.id}`);
@@ -181,7 +183,7 @@ export default function Info() {
           </Button>
         </div>
         <Card x-chunk="dashboard-05-chunk-3">
-          <TableApi data={data?.parents ?? null} columns={parentColumns} />
+          <TableApi data={data?.parents ?? null} columns={parentColumns} basepath="parents" />
         </Card>
       </div>
     </div>

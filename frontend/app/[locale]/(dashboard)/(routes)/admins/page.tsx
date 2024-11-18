@@ -97,10 +97,12 @@ export default function Admins() {
       cell: ({ row }) => (
         <Dialog>
           <DropdownMenu modal={false}>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger
+            onClick={(e) => e.stopPropagation()} // Stop row click
+            >
               <EllipsisVertical />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent onClick={(e) => e.stopPropagation()}> {/* Prevent row click when interacting with the menu */}
               <DropdownMenuItem
                 onClick={() => {
                   router.push(`./admins/${row.original.id}`);
@@ -177,7 +179,7 @@ export default function Admins() {
           </Button>
         </div>
         <Card x-chunk="dashboard-05-chunk-3">
-          <TableApi data={data?.admins ?? null} columns={adminColumns} />
+          <TableApi data={data?.admins ?? null} columns={adminColumns} basepath="admins" />
         </Card>
       </div>
     </div>

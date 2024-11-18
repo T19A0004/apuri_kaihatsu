@@ -295,6 +295,7 @@ export default function ThisMessage({
             <TableApi
               data={studentData?.students ?? null}
               columns={studentColumns}
+              basepath="students"
             />
           </div>
         </TabsContent>

@@ -97,6 +97,7 @@ export default function ThisGroup({
             <TableApi
               data={groupData?.members ?? null}
               columns={studentColumns}
+              basepath="students"
             />
           </div>
         </CardContent>

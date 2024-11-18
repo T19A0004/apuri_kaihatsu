@@ -14,14 +14,25 @@ import {
 } from "@tanstack/react-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
-interface TableApiProps<T> {
+interface TableApiProps<T extends { id: number | string }> {
   data: T[] | null;
   columns: ColumnDef<T>[];
+  basepath: string; // Add basePath prop
+  fpath: string | null;
+  rowClickHandler?: (row: T) => void; // Optional row click handler
 }
 
-function TableApi<T>({ data, columns }: TableApiProps<T>) {
+function TableApi<T extends { id: string | number }>({
+  data,
+  columns,
+  basepath,
+  fpath,
+  rowClickHandler,
+}: TableApiProps<T>) {
   const t = useTranslations("table");
+  const router = useRouter();
 
   const table = useReactTable({
     data: data ?? [],
@@ -55,7 +66,14 @@ function TableApi<T>({ data, columns }: TableApiProps<T>) {
           table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
-              data-state={row.getIsSelected() && "selected"}
+              onClick={
+                () =>
+                  rowClickHandler
+                    ? rowClickHandler(row.original) // Use custom rowClickHandler
+                    : fpath
+                    ? router.push(`${basepath}/${fpath}`)
+                    : router.push(`/${basepath}/${row.original.id}`) // Default behavior
+              } // Use dynamic basePath
             >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>

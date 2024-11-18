@@ -103,6 +103,8 @@ export default function ThisStudent({
             <TableApi
               data={studentData?.parents ?? null}
               columns={parentColumns}
+              basepath={studentId}
+              fpath="parents"
             />
           </div>
           <Separator />
@@ -111,6 +113,7 @@ export default function ThisStudent({
             <TableApi
               data={studentData?.groups ?? null}
               columns={groupColumns}
+              basepath="groups"
             />
           </div>
         </CardContent>

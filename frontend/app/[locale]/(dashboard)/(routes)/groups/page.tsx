@@ -82,10 +82,12 @@ export default function Groups() {
       cell: ({ row }) => (
         <Dialog>
           <DropdownMenu modal={false}>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger
+            onClick={(e) => e.stopPropagation()} // Stop row click
+            >
               <EllipsisVertical />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent onClick={(e) => e.stopPropagation()}> {/* Prevent row click when interacting with the menu */}
               <DropdownMenuItem
                 onClick={() => router.push(`/groups/${row.original.id}`)}
               >
@@ -149,7 +151,7 @@ export default function Groups() {
           </div>
         </div>
         <Card x-chunk="dashboard-05-chunk-3">
-          <TableApi data={data?.groups ?? null} columns={columns} />
+          <TableApi data={data?.groups ?? null} columns={columns} basepath="groups" />
         </Card>
       </div>
     </div>
