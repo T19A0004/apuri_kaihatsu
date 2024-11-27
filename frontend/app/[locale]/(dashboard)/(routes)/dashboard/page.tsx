@@ -3,6 +3,8 @@
 import { useTranslations } from "next-intl";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/navigation";
+import { Component as BarChartComponent } from "@/components/BarChartComponent";
+
 
 type CardData = {
   id: number;
@@ -57,6 +59,9 @@ export default function DashboardPage() {
     <div className="space-y-4">
       <div className="flex flex-row">
         <h1 className="text-3xl w-2/4 font-bold">{t("Dashboard")}</h1>
+      </div>
+      <div>
+        <BarChartComponent />
       </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 2xl:grid-cols-6">
         {cardData.map((data, index) => (
