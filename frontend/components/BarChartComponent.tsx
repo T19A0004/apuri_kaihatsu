@@ -25,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useTranslations } from "next-intl";
 
 // Mock data: Read and Unread Messages
 const chartData = [
@@ -136,6 +137,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function Component() {
+  const t = useTranslations("graph");
   const [timeRange, setTimeRange] = React.useState("90d")
 
   const filteredData = chartData.filter((item) => {
@@ -174,31 +176,33 @@ export function Component() {
     <Card>
       <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
         <div className="grid flex-1 gap-1 text-center sm:text-left">
-          <CardTitle>Messages Overview</CardTitle>
+        <CardTitle>{t("Messages Overview")}</CardTitle>
           <CardDescription>
-            Showing read and unread messages for the selected time range
+            {t(
+              "Showing read and unread messages for the selected time range"
+            )}
           </CardDescription>
           <div>
-            <strong>Read:</strong> {readPercentage}% &nbsp; | &nbsp;
-            <strong>Unread:</strong> {unreadPercentage}%
+            <strong>{t("Read")}:</strong> {readPercentage}% &nbsp; | &nbsp;
+            <strong>{t("Unread")}:</strong> {unreadPercentage}%
           </div>
         </div>
         <Select value={timeRange} onValueChange={setTimeRange}>
           <SelectTrigger
             className="w-[160px] rounded-lg sm:ml-auto"
-            aria-label="Select a value"
+            aria-label={t("Select a value")}
           >
-            <SelectValue placeholder="Last 3 months" />
+            <SelectValue placeholder={t("Last 3 months")} />
           </SelectTrigger>
           <SelectContent className="rounded-xl">
             <SelectItem value="90d" className="rounded-lg">
-              Last 3 months
+              {t("Last 3 months")}
             </SelectItem>
             <SelectItem value="30d" className="rounded-lg">
-              Last 30 days
+              {t("Last 30 days")}
             </SelectItem>
             <SelectItem value="7d" className="rounded-lg">
-              Last 7 days
+              {t("Last 7 days")}
             </SelectItem>
           </SelectContent>
         </Select>

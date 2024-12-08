@@ -75,6 +75,16 @@
     "next": "次",
     "ellipsis": "さらにページ"
   },
+  "graph": {
+    "Messages Overview": "メッセージ概要",
+    "Showing read and unread messages for the selected time range": "選択した期間の既読および未読メッセージを表示",
+    "Read": "既読",
+    "Unread": "未読",
+    "Last 3 months": "過去3か月",
+    "Last 30 days": "過去30日",
+    "Last 7 days": "過去7日",
+    "Select a value": "値を選択"
+  },
   "noticeCard": {
     "parent": "保護者",
     "event": "イベント",

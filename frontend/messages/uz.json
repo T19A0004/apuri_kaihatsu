@@ -75,6 +75,16 @@
     "next": "Keyingi",
     "ellipsis": "Ko'proq sahifalar"
   },
+  "graph": {
+    "Messages Overview": "Xabarlar sharhi",
+    "Showing read and unread messages for the selected time range": "Tanlangan vaqt oraligʻidagi oʻqilgan va oʻqilmagan xabarlar koʻrsatilmoqda",
+    "Read": "Oʻqilgan",
+    "Unread": "Oʻqilmagan",
+    "Last 3 months": "Soʻnggi 3 oy",
+    "Last 30 days": "Soʻnggi 30 kun",
+    "Last 7 days": "Soʻnggi 7 kun",
+    "Select a value": "Qiymatni tanlang"
+  },
   "noticeCard": {
     "parent": "Ota-ona",
     "event": "Voqea",

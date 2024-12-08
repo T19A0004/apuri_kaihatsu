@@ -74,6 +74,16 @@
     "next": "Следующая",
     "ellipsis": "Еще страницы"
   },
+  "graph": {
+    "Messages Overview": "Обзор сообщений",
+    "Showing read and unread messages for the selected time range": "Показаны прочитанные и непрочитанные сообщения за выбранный период",
+    "Read": "Прочитанные",
+    "Unread": "Непрочитанные",
+    "Last 3 months": "Последние 3 месяца",
+    "Last 30 days": "Последние 30 дней",
+    "Last 7 days": "Последние 7 дней",
+    "Select a value": "Выберите значение"
+  },
   "noticeCard": {
     "parent": "Родитель",
     "event": "Событие",
