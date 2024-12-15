@@ -186,7 +186,7 @@ export default function Info() {
         </div>
       </div>
       <Card x-chunk="dashboard-05-chunk-3">
-        <TableApi data={data?.posts ?? null} columns={postColumns} basepath="messages" />
+        <TableApi data={data?.posts ?? null} columns={postColumns} basepath="messages" fpath={null} />
       </Card>
     </div>
   );

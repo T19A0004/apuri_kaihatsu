@@ -151,7 +151,7 @@ export default function Groups() {
           </div>
         </div>
         <Card x-chunk="dashboard-05-chunk-3">
-          <TableApi data={data?.groups ?? null} columns={columns} basepath="groups" />
+          <TableApi data={data?.groups ?? null} columns={columns} basepath="groups" fpath={null} />
         </Card>
       </div>
     </div>

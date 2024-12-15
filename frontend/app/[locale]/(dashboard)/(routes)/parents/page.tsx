@@ -183,7 +183,7 @@ export default function Info() {
           </Button>
         </div>
         <Card x-chunk="dashboard-05-chunk-3">
-          <TableApi data={data?.parents ?? null} columns={parentColumns} basepath="parents" />
+          <TableApi data={data?.parents ?? null} columns={parentColumns} basepath="parents" fpath={null} />
         </Card>
       </div>
     </div>

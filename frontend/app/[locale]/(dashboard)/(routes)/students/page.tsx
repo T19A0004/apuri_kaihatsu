@@ -196,7 +196,7 @@ export default function Students() {
           </Button>
         </div>
         <Card x-chunk="dashboard-05-chunk-3">
-          <TableApi data={studentData?.students ?? null} columns={columns} basepath="students" />
+          <TableApi data={studentData?.students ?? null} columns={columns} basepath="students" fpath={null} />
         </Card>
       </div>
     </div>
