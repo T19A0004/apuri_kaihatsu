@@ -80,10 +80,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </nav>
             </SheetContent>
           </Sheet>
-          <div className="sm:flex gap-2 hidden">
+          {/* <div className="sm:flex gap-2 hidden">
             <LanguageSelect />
             <ToggleMode />
-          </div>
+          </div> */}
           <div className="flex items-center justify-end w-full gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -109,7 +109,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>{t("settings")}</DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="settings">{t("settings")}</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem>{t("support")}</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={async () => await signOut()}>

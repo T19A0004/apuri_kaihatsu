@@ -417,6 +417,15 @@
     "confirm": "Tasdiqlash",
     "groupDeleted": "Guruh muvaffaqiyatli oʻchirildi"
   },
+  "settings": {
+    "Settings": "Sozlamalar",
+    "Language": "Til",
+    "Appearance": "Tashqi ko'rinish",
+    "messages": {
+      "languageDescription": "Ilova uchun afzal tilni tanlang.",
+      "appearanceDescription": "Tashqi ko‘rinishni yorug‘ va qorong‘i rejimlar o‘rtasida almashtirib sozlang."
+    }
+  },  
   "parents": {
     "parents": "Ota-onalar",
     "parentName": "Ota-ona ismi",

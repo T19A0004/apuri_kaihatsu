@@ -417,6 +417,15 @@
     "confirm": "Confirm",
     "groupDeleted": "Group deleted Successfully"
   },
+  "settings": {
+    "Settings": "Settings",
+    "Language": "Language",
+    "Appearance": "Appearance",
+    "messages": {
+      "languageDescription": "Select your preferred language for the application.",
+      "appearanceDescription": "Customize the appearance by switching between light and dark mode."
+    }
+  },
   "parents": {
     "parents": "Parents",
     "parentName": "Parent Name",

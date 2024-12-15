@@ -418,6 +418,15 @@
     "confirm": "確認",
     "groupDeleted": "グループが正常に削除されました"
   },
+  "settings": {
+    "Settings": "設定",
+    "Language": "言語",
+    "Appearance": "外観",
+    "messages": {
+      "languageDescription": "アプリケーションで使用する言語を選択してください。",
+      "appearanceDescription": "ライトモードとダークモードを切り替えて外観をカスタマイズしてください。"
+    }
+  },
   "parents": {
     "parents": "保護者",
     "parentName": "保護者の名前",

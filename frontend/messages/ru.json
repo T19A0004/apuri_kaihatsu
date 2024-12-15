@@ -417,6 +417,15 @@
     "confirm": "Подтвердить",
     "groupDeleted": "Группа успешно удалена"
   },
+  "settings": {
+    "Settings": "Настройки",
+    "Language": "Язык",
+    "Appearance": "Внешний вид",
+    "messages": {
+      "languageDescription": "Выберите предпочитаемый язык для приложения.",
+      "appearanceDescription": "Настройте внешний вид, переключаясь между светлым и темным режимами."
+    }
+  },
   "parents": {
     "parents": "Родители",
     "parentName": "Имя родителя",
