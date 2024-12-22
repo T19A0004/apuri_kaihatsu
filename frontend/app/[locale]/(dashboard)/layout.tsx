@@ -18,6 +18,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { User } from "next-auth";
 import NavLinks from "@/components/NavLinks";
 import LanguageSelect from "@/components/LanguageSelect";
+import TimeClocks from "@/components/TimeClocks";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession({
@@ -80,10 +81,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </nav>
             </SheetContent>
           </Sheet>
-          {/* <div className="sm:flex gap-2 hidden">
-            <LanguageSelect />
-            <ToggleMode />
-          </div> */}
+          <div className="sm:flex gap-2 hidden">
+            {/* <LanguageSelect />
+            <ToggleMode /> */}
+            <TimeClocks />
+          </div>
           <div className="flex items-center justify-end w-full gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
