@@ -98,11 +98,11 @@ export default function Info() {
       ),
     },
     {
-      accessorKey: "read_percent",
-      header: t("Read_percent"),
+      accessorKey: "sent_at",
+      header: t("Sent Date"),
       cell: ({ row }) => (
         <Link href={`messages/${row.original.id}`}>
-          {row.getValue("read_percent")}
+          {new Date(row.getValue("sent_at")).toLocaleDateString()}
         </Link>
       ),
     },
@@ -112,11 +112,13 @@ export default function Info() {
         <Dialog>
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger
-            onClick={(e) => e.stopPropagation()} // Stop row click
+              onClick={(e) => e.stopPropagation()} // Stop row click
             >
               <EllipsisVertical className="cursor-pointer" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent onClick={(e) => e.stopPropagation()}> {/* Prevent row click when interacting with the menu */}
+            <DropdownMenuContent
+              onClick={(e) => e.stopPropagation()} // Prevent row click when interacting with the menu
+            >
               <DropdownMenuItem
                 onClick={() => router.push(`${pathName}/${row.original.id}`)}
               >
@@ -185,8 +187,13 @@ export default function Info() {
           <PaginationApi data={data?.pagination ?? null} setPage={setPage} />
         </div>
       </div>
-      <Card x-chunk="dashboard-05-chunk-3">
-        <TableApi data={data?.posts ?? null} columns={postColumns} basepath="messages" fpath={null} />
+      <Card>
+        <TableApi
+          data={data?.posts ?? null}
+          columns={postColumns}
+          basepath="messages"
+          fpath={null}
+        />
       </Card>
     </div>
   );
