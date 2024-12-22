@@ -70,6 +70,24 @@ export default function Info() {
     setPage(1);
   };
 
+  function PriorityBadge({ priority }: { priority: "high" | "medium" | "low" }) {
+    const colors: Record<"high" | "medium" | "low", string> = {
+      high: "bg-red-500 text-white",
+      medium: "bg-yellow-500 text-white",
+      low: "bg-green-500 text-white",
+    };
+  
+    return (
+      <span
+        className={`flex items-center justify-center w-24 px-3 py-1 rounded-full text-sm font-semibold ${
+          colors[priority]
+        }`}
+      >
+        {priority}
+      </span>
+    );
+  }   
+
   const { mutate } = useApiMutation<{ message: string }>(
     `post/${postId}`,
     "DELETE",
@@ -118,7 +136,7 @@ export default function Info() {
       header: t("Priority"),
       cell: ({ row }) => (
         <Link href={`messages/${row.original.id}`}>
-          {row.getValue("priority")}
+          <PriorityBadge priority={row.getValue("priority")} />
         </Link>
       ),
     },
