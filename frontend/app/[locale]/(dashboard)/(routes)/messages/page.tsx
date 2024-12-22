@@ -31,20 +31,45 @@ import { useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import useApiQuery from "@/lib/useApiQuery";
 import useApiMutation from "@/lib/useApiMutation";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 export default function Info() {
   const t = useTranslations("posts");
   const tName = useTranslations("names");
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  // Format the selected date for filtering
+  const queryDate = selectedDate ? format(selectedDate, "yyyy-MM-dd") : "";
+
+  // Fetch all data from the API (no backend filtering)
   const { data } = useApiQuery<PostApi>(
     `post/list?page=${page}&text=${search}`,
     ["posts", page, search]
   );
+
+  // Filter posts by the selected date on the frontend
+  const filteredPosts = data?.posts?.filter((post) => {
+    const postDate = new Date(post.sent_at).toLocaleDateString("en-CA"); // Format as "yyyy-MM-dd"
+    return queryDate ? postDate === queryDate : true; // Match date or show all if no date selected
+  });
+
   const pathName = usePathname();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [postId, setPostId] = useState<number | null>(null);
+
+  const resetFilters = () => {
+    setSelectedDate(null);
+    setSearch("");
+    setPage(1);
+  };
+
   const { mutate } = useApiMutation<{ message: string }>(
     `post/${postId}`,
     "DELETE",
@@ -99,10 +124,10 @@ export default function Info() {
     },
     {
       accessorKey: "sent_at",
-      header: t("Sent Date"),
+      header: "Sent Date",
       cell: ({ row }) => (
         <Link href={`messages/${row.original.id}`}>
-          {new Date(row.getValue("sent_at")).toLocaleDateString()}
+          {new Date(row.getValue("sent_at")).toLocaleDateString()} {/* Show only date */}
         </Link>
       ),
     },
@@ -116,9 +141,7 @@ export default function Info() {
             >
               <EllipsisVertical className="cursor-pointer" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-              onClick={(e) => e.stopPropagation()} // Prevent row click when interacting with the menu
-            >
+            <DropdownMenuContent onClick={(e) => e.stopPropagation()}>
               <DropdownMenuItem
                 onClick={() => router.push(`${pathName}/${row.original.id}`)}
               >
@@ -174,22 +197,50 @@ export default function Info() {
           <Button>{t("createpost")}</Button>
         </Link>
       </div>
-      <div className="flex justify-between">
-        <Input
-          placeholder={t("filter")}
-          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setSearch(e.target.value);
-            setPage(1);
-          }}
-          className="max-w-sm"
-        />
-        <div className="">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center space-x-4">
+          <Input
+            placeholder={t("filter")}
+            value={search}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
+            className="max-w-sm"
+          />
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  "w-[240px] justify-start text-left font-normal",
+                  !selectedDate && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon className="mr-2" />
+                {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          <Button variant="secondary" onClick={resetFilters}>
+            Reset Filter
+          </Button>
+        </div>
+        <div>
           <PaginationApi data={data?.pagination ?? null} setPage={setPage} />
         </div>
       </div>
       <Card>
         <TableApi
-          data={data?.posts ?? null}
+          data={filteredPosts ?? []} // Use the filtered posts
           columns={postColumns}
           basepath="messages"
           fpath={null}
