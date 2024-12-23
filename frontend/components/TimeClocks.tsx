@@ -13,10 +13,14 @@ function formatTime(timezone: string) {
 }
 
 export default function TimeClocks() {
-  const [localTime, setLocalTime] = useState(formatTime(Intl.DateTimeFormat().resolvedOptions().timeZone));
-  const [japanTime, setJapanTime] = useState(formatTime("Asia/Tokyo"));
+  const [localTime, setLocalTime] = useState<string | null>(null);
+  const [japanTime, setJapanTime] = useState<string | null>(null);
 
   useEffect(() => {
+    // Set the initial time after component mounts
+    setLocalTime(formatTime(Intl.DateTimeFormat().resolvedOptions().timeZone));
+    setJapanTime(formatTime("Asia/Tokyo"));
+
     const interval = setInterval(() => {
       setLocalTime(formatTime(Intl.DateTimeFormat().resolvedOptions().timeZone));
       setJapanTime(formatTime("Asia/Tokyo"));
@@ -32,7 +36,9 @@ export default function TimeClocks() {
         <Clock className="h-6 w-6 text-primary" />
         <div>
           <div className="text-sm font-medium text-muted-foreground text-nowrap">Local Time</div>
-          <div className="text-xl font-bold">{localTime}</div>
+          <div className="text-xl font-bold">
+            {localTime ?? "--:--"} {/* Placeholder for server render */}
+          </div>
         </div>
       </div>
       {/* Japan Time */}
@@ -40,7 +46,9 @@ export default function TimeClocks() {
         <Clock className="h-6 w-6 text-primary" />
         <div>
           <div className="text-sm font-medium text-muted-foreground text-nowrap">Japan Time</div>
-          <div className="text-xl font-bold">{japanTime}</div>
+          <div className="text-xl font-bold">
+            {japanTime ?? "--:--"} {/* Placeholder for server render */}
+          </div>
         </div>
       </div>
     </div>
