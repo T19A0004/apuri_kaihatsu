@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/navigation";
-import { Component as BarChartComponent } from "@/components/BarChartComponent";
+import { BarChartComponent } from "@/components/BarChartComponent";
 
 
 type CardData = {

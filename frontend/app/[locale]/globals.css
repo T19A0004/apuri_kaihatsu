@@ -39,6 +39,7 @@
     --ring: 240 10% 3.9%;
 
     --radius: 0.5rem;
+    --tooltip-bg-color: #ffffff;
   }
 
   .dark {
@@ -75,6 +76,7 @@
     --border: 240 3.7% 55.9%;
     --input: 240 3.7% 55.9%;
     --ring: 240 4.9% 83.9%;
+    --tooltip-bg-color: #1e1e2f;
   }
 }
 
