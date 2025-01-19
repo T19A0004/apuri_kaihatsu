@@ -31,7 +31,11 @@ import { useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import useApiQuery from "@/lib/useApiQuery";
 import useApiMutation from "@/lib/useApiMutation";
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
@@ -42,21 +46,35 @@ export default function Info() {
   const tName = useTranslations("names");
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [dateRange, setDateRange] = useState<{
+    from?: Date | null;
+    to?: Date | null;
+  }>({
+    from: null,
+    to: null,
+  });
 
-  // Format the selected date for filtering
-  const queryDate = selectedDate ? format(selectedDate, "yyyy-MM-dd") : "";
+  const from = dateRange?.from || null;
+  const to = dateRange?.to || null;
 
-  // Fetch all data from the API (no backend filtering)
+  const queryDateRange =
+    from && to
+      ? `${format(from, "yyyy-MM-dd")},${format(to, "yyyy-MM-dd")}`
+      : "";
+
   const { data } = useApiQuery<PostApi>(
     `post/list?page=${page}&text=${search}`,
     ["posts", page, search]
   );
 
-  // Filter posts by the selected date on the frontend
   const filteredPosts = data?.posts?.filter((post) => {
-    const postDate = new Date(post.sent_at).toLocaleDateString("en-CA"); // Format as "yyyy-MM-dd"
-    return queryDate ? postDate === queryDate : true; // Match date or show all if no date selected
+    const postDate = new Date(post.sent_at);
+    if (from && to) {
+      return postDate >= from && postDate <= to;
+    } else if (from) {
+      return postDate.toDateString() === from.toDateString();
+    }
+    return true; // No filtering
   });
 
   const pathName = usePathname();
@@ -65,28 +83,30 @@ export default function Info() {
   const [postId, setPostId] = useState<number | null>(null);
 
   const resetFilters = () => {
-    setSelectedDate(null);
+    setDateRange({ from: null, to: null });
     setSearch("");
     setPage(1);
   };
 
-  function PriorityBadge({ priority }: { priority: "high" | "medium" | "low" }) {
+  function PriorityBadge({
+    priority,
+  }: {
+    priority: "high" | "medium" | "low";
+  }) {
     const colors: Record<"high" | "medium" | "low", string> = {
       high: "bg-red-500 text-white",
       medium: "bg-yellow-500 text-white",
       low: "bg-green-500 text-white",
     };
-  
+
     return (
       <span
-        className={`flex items-center justify-center w-24 px-3 py-1 rounded-full text-sm font-semibold ${
-          colors[priority]
-        }`}
+        className={`flex items-center justify-center w-24 px-3 py-1 rounded-full text-sm font-semibold ${colors[priority]}`}
       >
         {priority}
       </span>
     );
-  }   
+  }
 
   const { mutate } = useApiMutation<{ message: string }>(
     `post/${postId}`,
@@ -145,7 +165,8 @@ export default function Info() {
       header: "Sent Date",
       cell: ({ row }) => (
         <Link href={`messages/${row.original.id}`}>
-          {new Date(row.getValue("sent_at")).toLocaleDateString()} {/* Show only date */}
+          {new Date(row.getValue("sent_at")).toLocaleDateString()}{" "}
+          {/* Show only date */}
         </Link>
       ),
     },
@@ -232,18 +253,22 @@ export default function Info() {
                 variant="outline"
                 className={cn(
                   "w-[240px] justify-start text-left font-normal",
-                  !selectedDate && "text-muted-foreground"
+                  !from && "text-muted-foreground"
                 )}
               >
                 <CalendarIcon className="mr-2" />
-                {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
+                {from && to
+                  ? `${format(from, "MMM d")} - ${format(to, "MMM d")}`
+                  : from
+                  ? format(from, "MMM d")
+                  : "Pick a date range"}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
-                mode="single"
-                selected={selectedDate}
-                onSelect={setSelectedDate}
+                mode="range"
+                selected={dateRange}
+                onSelect={setDateRange}
                 initialFocus
               />
             </PopoverContent>
