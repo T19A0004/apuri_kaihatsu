@@ -122,7 +122,7 @@ export default function Info() {
       },
     }
   );
-
+  const priorityOrder = ["high", "medium", "low"];
   const postColumns: ColumnDef<Post>[] = [
     {
       accessorKey: "title",
@@ -145,6 +145,7 @@ export default function Info() {
     {
       accessorKey: "admin_name",
       header: t("Admin_name"),
+      enableSorting: true,
       cell: ({ row }) => (
         <Link href={`messages/${row.original.id}`}>
           {tName("name", { ...row?.original?.admin })}
@@ -153,26 +154,34 @@ export default function Info() {
     },
     {
       accessorKey: "priority",
-      header: t("Priority"),
+      header: "Priority",
+      enableSorting: true,
+      sortingFn: (rowA, rowB) => {
+        // Compare priorities based on their index in the `priorityOrder` array
+        const priorityA = rowA.getValue("priority") as string;
+        const priorityB = rowB.getValue("priority") as string;
+  
+        return (
+          priorityOrder.indexOf(priorityA) - priorityOrder.indexOf(priorityB)
+        );
+      },
       cell: ({ row }) => (
-        <Link href={`messages/${row.original.id}`}>
-          <PriorityBadge priority={row.getValue("priority")} />
-        </Link>
+        <PriorityBadge priority={row.getValue("priority")} />
       ),
     },
     {
       accessorKey: "sent_at",
       header: "Sent Date",
+      enableSorting: true,
       cell: ({ row }) => (
         <Link href={`messages/${row.original.id}`}>
-          {new Date(row.getValue("sent_at")).toLocaleDateString()}{" "}
-          {/* Show only date */}
+          {new Date(row.getValue("sent_at")).toLocaleDateString()}
         </Link>
       ),
     },
     {
       header: t("action"),
-      cell: ({ row }) => (
+      cell: ({ row }) => (  
         <Dialog>
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger
